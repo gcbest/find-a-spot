@@ -5,13 +5,28 @@ class SignIn extends Component {
     render () {
         return (
             <div>
-                <Nav/>
-                <p>Find a spot near you!</p>
-                <br/>
-                <form>
-                    <input type="text" ref="username" placeholder="username"/>
-                    <button id="submit">Enter your local chat room</button>
-                </form>
+                <div className="centered-form">
+                    <Nav/>
+                    <h1>Find a spot near you!</h1>
+                    <div className="centered-form__form">
+                        <form action="/mapview">
+                            <div className="form-field">
+                                <h3>Join a chat</h3>
+                            </div>
+                            <div className="form-field">
+                                <label>Display name</label>
+                                <input type="text" name="name" autoFocus/>
+                            </div>
+                            <div className="form-field">
+                                <label>Room name</label>
+                                <input type="text" name="room"/>
+                            </div>
+                            <div className="form-field">
+                                <button>Enter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     }
