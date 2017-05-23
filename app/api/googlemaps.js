@@ -3,7 +3,7 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
     var uluru = {lat: -25.363, lng: 131.044};
 
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 15,
         center: centerLocation
     });
 
@@ -16,7 +16,6 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
 
         marker.addListener('click', () => {
             var position = marker.getPosition();
-            debugger;
             map.setCenter(position);
             geocoder.geocode({
                 'latLng': position

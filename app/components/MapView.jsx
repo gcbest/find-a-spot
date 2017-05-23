@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import Nav from './Nav';
 import Map from './Map';
+import List from './List';
 
 class MapView extends Component {
     constructor () {
         super();
         this.state = {
-            locations: []
+            locations: [{lat: 40.00, lng: -74.47}]
         };
         this.addLocation = this.addLocation.bind(this);
     }
@@ -21,15 +22,9 @@ class MapView extends Component {
     render () {
         return (
             <div>
-                {Nav}
+                <Nav/>
                 <Map openSpots={this.state.locations} addLocation={this.addLocation}/>
-                <div id="list">
-                    List
-                    <ul>
-                        <li>672 Macon St</li>
-                        <li>801 Neill Ave</li>
-                    </ul>
-                </div>
+                <List openSpots={this.state.locations}/>
             </div>
         );
     }

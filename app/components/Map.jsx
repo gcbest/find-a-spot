@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Nav from './Nav';
-// import initMap from '../api/googlemaps';
 
 var initMap = require('../api/googlemaps');
 
@@ -23,10 +21,14 @@ class Map extends Component {
         document.body.appendChild(scriptInit);
 
     }
-    componentDidMount () {
+    componentDidUpdate () {
         // initMap(this.props.openSpots[0], this.props.openSpots[0]);
-
     }
+    // componentWillReceiveProps (nextProps) {
+    //     debugger;
+    //     this.displayList(this.props.openSpots);
+    //     // this.displayList(this.nextProps.openSpots);
+    // }
     handleClick () {
         if (!navigator.geolocation) {
             return alert('Geolocation not supported by your browser!');
@@ -49,24 +51,11 @@ class Map extends Component {
             alert('Unable to fetch location');
         });
     }
-    displayList (list) {
-        list.forEach((spot) => {
-            return (
-                <li>{spot.lat}</li>
-            );
-        });
-    }
     render () {
         return (
             <div>
-                <Nav/>
                 <div id="map"/>
                 <button id="send-location" onClick={this.handleClick.bind(this)}>Mark the open spot here</button>
-                <div id="spots-list">
-                    <ul>
-                        {this.displayList(this.props.openSpots)}
-                    </ul>
-                </div>
             </div>
         );
     }
