@@ -40,8 +40,10 @@ class Map extends Component {
             //     position.coords.latitude,
             //     position.coords.longitude
             var obj = {lat: position.coords.latitude, lng: position.coords.longitude};
+            var obj2 = {lat: 41.003, lng: -72.48502};
             that.props.addLocation(obj);
-            initMap(obj, [obj]);
+            that.props.addLocation(obj2);
+            initMap(obj, that.props.openSpots);
         }, function() {
             // locationButton.removeAttr('disabled').text('Send Location');
             alert('Unable to fetch location');
