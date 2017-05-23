@@ -49,12 +49,24 @@ class Map extends Component {
             alert('Unable to fetch location');
         });
     }
+    displayList (list) {
+        list.forEach((spot) => {
+            return (
+                <li>{spot.lat}</li>
+            );
+        });
+    }
     render () {
         return (
             <div>
                 <Nav/>
                 <div id="map"/>
                 <button id="send-location" onClick={this.handleClick.bind(this)}>Mark the open spot here</button>
+                <div id="spots-list">
+                    <ul>
+                        {this.displayList(this.props.openSpots)}
+                    </ul>
+                </div>
             </div>
         );
     }
