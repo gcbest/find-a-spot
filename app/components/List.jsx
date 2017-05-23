@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 class List extends Component {
     constructor (props) {
         super(props)
     }
-    displayList (list) {
-        return list.map((spot) => {
-            return <li key={spot.lat}>{spot.lat}</li>;
-        });
-    }
     render () {
         return (
             <div id="spots-list">
                 <ul>
-                    {this.displayList(this.props.openSpots)}
+                    {this.props.addresses}
                 </ul>
             </div>
         );
