@@ -39,7 +39,7 @@ class MapView extends Component {
                 var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${spot.lat},${spot.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
                 return axios.get(url)
                     .then((response) => {
-                        return (<li key={spot.lat}>{response.data.results[0].formatted_address}</li>);
+                        return (<li data-lat={spot.lat} key={spot.lat}>{response.data.results[0].formatted_address}</li>);
                     })
                     .catch((error) => {
                         throw error;

@@ -10,16 +10,21 @@ const users = require('./utils/users');
 const publicPath = path.join(__dirname, '../public');
 const PORT = process.env.PORT || 8080;
 
-var app  = express();
+const app  = express();
 
-var server = http.createServer(app);
-
-var io = socketIO(server);
-
+// const server = http.createServer(app);
 
 app.use(express.static(publicPath));
 
+const server = app.listen(PORT, () => {
+    console.log(`app listening on port ${PORT}`);
+});
+
+const io = socketIO(server);
+
+
 io.on('connection', (socket) => {
+    console.log('a user connected');
 
     socket.on('join', (params, callback) => {
         if (!isRealString(params.name) || !isRealString(params.room)) {
@@ -38,8 +43,7 @@ io.on('connection', (socket) => {
 
         callback();
     });
-
-
+    
     socket.on('createMessage', (message, callback) => {
         var user = users.getUser(socket.id);
 
@@ -67,11 +71,4 @@ io.on('connection', (socket) => {
         }
     });
 
-});
-
-
-// app.get('/', )
-
-app.listen(PORT, () => {
-   console.log(`app listening on port ${PORT}`);
 });

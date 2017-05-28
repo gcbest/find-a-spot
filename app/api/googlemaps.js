@@ -21,7 +21,6 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
             geocoder.geocode({'location': spot}, function(results, status) {
                 if (status === 'OK') {
                     if (results[0]) {
-                        debugger;
                         infowindow.setContent(results[0].formatted_address);
                         infowindow.open(map, marker);
                     } else {
@@ -31,7 +30,15 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
                     window.alert('Geocoder failed due to: ' + status);
                 }
             });
-        })
+        });
+    });
+
+    // Close info window if open
+    map.addListener('click', () => {
+        alert('CLikeD');
+        if (infowindow) {
+            infowindow.close();
+        }
     });
 }
 

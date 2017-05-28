@@ -1,7 +1,25 @@
 import React, {Component} from 'react';
+const io = require('socket.io-client');
+const socket = io();
+
 import Nav from './Nav';
 
 class SignIn extends Component {
+    componentDidMount () {
+        socket.on('connect', function () {
+            console.log('Connected to server');
+            var params = jQuery.deparam(window.location.search);
+
+            socket.emit('join', params, function(err) {
+                if (err) {
+                    alert(err);
+                    window.location.href = '/';
+                } else {
+                    console.log('No error');
+                }
+            });
+        });
+    }
     render () {
         return (
             <div>
@@ -18,8 +36,8 @@ class SignIn extends Component {
                                 <input type="text" name="name" autoFocus/>
                             </div>
                             <div className="form-field">
-                                <label>Room name</label>
-                                <input type="text" name="room"/>
+                                <label>Enter Your Zip Code's Room</label>
+                                <input type="hidden" name="room"/>
                             </div>
                             <div className="form-field">
                                 <button>Enter</button>
