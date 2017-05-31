@@ -17,7 +17,7 @@ ReactDOM.render(
         <Router>
             <Switch>
                     <Route exact path="/" component={SignIn}/>
-                    <Route path="/mapview" component={MapView}/>
+                    <Route path="/mapview/:id" component={MapView}/>
                     <Route path="/chatview" component={ChatView}/>
             </Switch>
         </Router>

@@ -34,14 +34,14 @@ socket.on('connect', function () {
 
 socket.on('updateUserList', function(usersArr) {
     console.log('Users list', usersArr);
-    var ol = jQuery('<ol></ol>');
-
-    debugger;
-    usersArr.forEach(function(user) {
-        ol.append(jQuery('<li></li>').text(user));
-    });
-
-    jQuery('#users').html(ol);
+    // var ol = jQuery('<ol></ol>');
+    //
+    // debugger;
+    // usersArr.forEach(function(user) {
+    //     ol.append(jQuery('<li></li>').text(user));
+    // });
+    //
+    // jQuery('#users').html(ol);
 });
 
 // whenever the connection drops
@@ -50,16 +50,18 @@ socket.on('disconnect', function () {
 });
 
 socket.on('newMessage', function(message) {
-    var formattedTime = moment(message.createdAt).format('h:mm a');
-    var template = jQuery('#message-template').html();
-    var html = Mustache.render(template, {
-        text: message.text,
-        from: message.from,
-        createdAt: formattedTime
-    });
+    console.log('new user in same room!');
 
-    jQuery('#messages').append(html);
-    scrollToBottom();
+    // var formattedTime = moment(message.createdAt).format('h:mm a');
+    // var template = jQuery('#message-template').html();
+    // var html = Mustache.render(template, {
+    //     text: message.text,
+    //     from: message.from,
+    //     createdAt: formattedTime
+    // });
+    //
+    // jQuery('#messages').append(html);
+    // scrollToBottom();
 });
 
 

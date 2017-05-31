@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 const io = require('socket.io-client');
 const socket = io();
@@ -10,7 +11,8 @@ class SignIn extends Component {
         super();
         this.state = {
             name: '',
-            room: ''
+            room: '',
+            rediret: false
         };
     }
     componentDidMount() {
@@ -18,12 +20,12 @@ class SignIn extends Component {
             console.log('Connected to server');
         });
     }
-    handleClick(e) {
+    handleSubmit(e) {
         // var params = deparam(window.location.search);
         e.preventDefault();
-
-
         var that = this;
+
+        // Grab user location
         if (!navigator.geolocation) {
             return alert('Geolocation not supported by your browser!');
         }
@@ -34,12 +36,14 @@ class SignIn extends Component {
             //     position.coords.longitude
             var obj = {lat: position.coords.latitude, lng: position.coords.longitude};
 
+            // Convert Lat & Lng into zip code
             var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.lat},${obj.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
             axios.get(url)
                 .then((response) => {
                     that.setState({
                         name: that.refs.name.value,
-                        room: response.data.results[0].address_components[7].long_name
+                        room: response.data.results[0].address_components[7].long_name,
+                        redirect: true
                     });
 
                     var params = {
@@ -47,9 +51,6 @@ class SignIn extends Component {
                         room: that.state.room
                     };
 
-                    that.refs.name.value = that.state.name;
-                    that.refs.room.value = that.state.room;
-                    document.getElementById('signin-form').submit();
                     socket.emit('join', params, function(err) {
                         if (err) {
                             alert(err);
@@ -68,13 +69,18 @@ class SignIn extends Component {
 
     }
     render () {
+        var {redirect, room} = this.state;
+
+        if (redirect) {
+            return <Redirect to={`/mapview/${room}`}/>;
+        }
         return (
             <div>
                 <div className="centered-form">
                     <Nav/>
                     <h1>Find a spot near you!</h1>
                     <div className="centered-form__form">
-                        <form id="signin-form" action="/mapview">
+                        <form id="signin-form">
                             <div className="form-field">
                                 <h3>Join a chat</h3>
                             </div>
@@ -87,7 +93,7 @@ class SignIn extends Component {
                                 <input ref="room" type="hidden" name="room"/>
                             </div>
                             <div className="form-field">
-                                <button onClick={this.handleClick.bind(this)}>Enter</button>
+                                <button onClick={this.handleSubmit.bind(this)}>Enter</button>
                             </div>
                         </form>
                     </div>
