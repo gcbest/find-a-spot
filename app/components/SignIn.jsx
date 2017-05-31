@@ -3,9 +3,6 @@ import axios from 'axios';
 const io = require('socket.io-client');
 const socket = io();
 
-var deparam = require('jquery-deparam');
-
-
 import Nav from './Nav';
 
 class SignIn extends Component {
@@ -40,7 +37,6 @@ class SignIn extends Component {
             var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.lat},${obj.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
             axios.get(url)
                 .then((response) => {
-                debugger;
                     that.setState({
                         name: that.refs.name.value,
                         room: response.data.results[0].address_components[7].long_name
@@ -51,6 +47,9 @@ class SignIn extends Component {
                         room: that.state.room
                     };
 
+                    that.refs.name.value = that.state.name;
+                    that.refs.room.value = that.state.room;
+                    document.getElementById('signin-form').submit();
                     socket.emit('join', params, function(err) {
                         if (err) {
                             alert(err);
@@ -75,7 +74,7 @@ class SignIn extends Component {
                     <Nav/>
                     <h1>Find a spot near you!</h1>
                     <div className="centered-form__form">
-                        <form action="/mapview">
+                        <form id="signin-form" action="/mapview">
                             <div className="form-field">
                                 <h3>Join a chat</h3>
                             </div>
@@ -85,7 +84,7 @@ class SignIn extends Component {
                             </div>
                             <div className="form-field">
                                 <label>Enter Your Zip Code's Room</label>
-                                <input type="hidden" name="room"/>
+                                <input ref="room" type="hidden" name="room"/>
                             </div>
                             <div className="form-field">
                                 <button onClick={this.handleClick.bind(this)}>Enter</button>
