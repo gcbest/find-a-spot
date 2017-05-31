@@ -1,11 +1,12 @@
+import axios from 'axios';
+
 import React, {Component} from 'react';
 import Nav from './Nav';
 import Map from './Map';
 import List from './List';
 
-import axios from 'axios';
 
-// import addressFormatter from '../api/formatAddress';
+var {formatAddress} = require('../api/formatAddress');
 
 class MapView extends Component {
     constructor () {
@@ -45,6 +46,8 @@ class MapView extends Component {
                         throw error;
                     });
             });
+            // var addressArr = formatAddress(list);
+            // debugger;
             Promise.all(arr).then((results) => {
                 that.setState({
                     addresses: results

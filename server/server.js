@@ -5,7 +5,9 @@ const socketIO = require('socket.io');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message.js');
 const isRealString = require('./utils/validation');
-const users = require('./utils/users');
+const Users = require('./utils/users');
+
+var users = new Users();
 
 const publicPath = path.join(__dirname, '../public');
 const PORT = process.env.PORT || 8080;
@@ -27,7 +29,7 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('join', (params, callback) => {
-        if (!isRealString(params.name) || !isRealString(params.room)) {
+        if (!isRealString(params.name) /*|| !isRealString(params.room)*/) {
             return callback('Name and room name are required');
         }
 
@@ -43,7 +45,7 @@ io.on('connection', (socket) => {
 
         callback();
     });
-    
+
     socket.on('createMessage', (message, callback) => {
         var user = users.getUser(socket.id);
 
@@ -64,6 +66,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnected');
         var user = users.removeUser(socket.id);
+        var user = users.getUser(socket.id);
 
         if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));

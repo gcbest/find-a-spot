@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React from 'react';
 
 module.exports = {
     formatAddress: (list) => {
@@ -11,8 +12,6 @@ module.exports = {
                     throw error;
                 });
         });
-        Promise.all(arr).then((results) => {
-            console.log(results);
-        });
+        return arr;
     }
 };
