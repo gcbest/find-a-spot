@@ -1,10 +1,11 @@
 import axios from 'axios';
+import uuid from 'node-uuid';
+import moment from 'moment';
 
 import React, {Component} from 'react';
 import Nav from './Nav';
 import Map from './Map';
-import List from './List';
-
+import OpenSpotsList from './OpenSpotsList';
 
 var {formatAddress} = require('../api/formatAddress');
 
@@ -12,13 +13,18 @@ class MapView extends Component {
     constructor () {
         super();
         this.state = {
-            locations: [{lat: 40.00, lng: -74.47}],
+            locations: [{lat: 40.00, lng: -74.47,
+                         address:'',
+                         zipCode: '',
+                         id: uuid(),
+                         markedOpenAt: moment().unix(),
+                         markedClosedAt: undefined}],
             addresses: []
         };
         this.addLocation = this.addLocation.bind(this);
         this.addAddress = this.addAddress.bind(this);
     }
-    addLocation (objLocation) {
+    addLocation(objLocation) {
         var locationArrCopy = this.state.locations;
         locationArrCopy.push(objLocation);
 
@@ -33,7 +39,7 @@ class MapView extends Component {
             addresses: addressCopy
         });
     }
-    formatTheAddress (list) {
+    formatTheAddressArray(list) {
         var that = this;
         if (list.length > 0) {
             var arr = list.map((spot) => {
@@ -55,13 +61,14 @@ class MapView extends Component {
             });
         }
     }
+
     render () {
-        this.formatTheAddress(this.state.locations);
+        // this.formatTheAddressArray(this.state.locations);
         return (
             <div>
                 <Nav/>
                 <Map openSpots={this.state.locations} addLocation={this.addLocation}/>
-                <List addresses={this.state.addresses}/>
+                <OpenSpotsList addresses={this.state.locations}/>
             </div>
         );
     }

@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
         socket.join(params.room);
         users.removeUser(socket.id);
         users.addUser(socket.id, params.name, params.room);
-        
+
         io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));

@@ -12,7 +12,7 @@ class SignIn extends Component {
         this.state = {
             name: '',
             room: '',
-            rediret: false
+            redirect: false
         };
     }
     componentDidMount() {
@@ -34,10 +34,10 @@ class SignIn extends Component {
             // locationButton.removeAttr('disabled').text('Send Location');
             //     position.coords.latitude,
             //     position.coords.longitude
-            var obj = {lat: position.coords.latitude, lng: position.coords.longitude};
+            var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
 
             // Convert Lat & Lng into zip code
-            var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${obj.lat},${obj.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
+            var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userCoords.lat},${userCoords.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
             axios.get(url)
                 .then((response) => {
                     that.setState({

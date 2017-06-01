@@ -35,7 +35,7 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
 
     // Close info window if open
     map.addListener('click', () => {
-        alert('CLiked');
+        alert('Clicked');
         if (infowindow) {
             infowindow.close();
         }
