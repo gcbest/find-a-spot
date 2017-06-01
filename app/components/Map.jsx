@@ -15,13 +15,7 @@ class Map extends Component {
         scriptInit.text = initMap;
 
         var that = this;
-        const script = document.createElement("script");
 
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s&callback=initMap";
-        script.async = true;
-        script.defer = true;
-
-        document.body.appendChild(script);
         document.body.appendChild(scriptInit);
 
 
@@ -36,6 +30,37 @@ class Map extends Component {
 
             initMap(userCoords, that.props.openSpots);
 
+        });
+    }
+    // componentWillReceiveProps(nextProps) {
+    //     var that = this;
+    //     // Grab user location
+    //     if (!navigator.geolocation) {
+    //         return alert('Geolocation not supported by your browser!');
+    //     }
+    //     // locationButton.attr('disabled', 'disabled').text('Sending Location...');
+    //     navigator.geolocation.getCurrentPosition(function(position) {
+    //         // locationButton.removeAttr('disabled').text('Send Location');
+    //         var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
+    //
+    //         // if (that.props === nextProps)
+    //         initMap(userCoords, nextProps.openSpots);
+    //
+    //     });
+    // }
+    componentDidUpdate(prevProps, prevState) {
+        var that = this;
+        // Grab user location
+        if (!navigator.geolocation) {
+            return alert('Geolocation not supported by your browser!');
+        }
+        // locationButton.attr('disabled', 'disabled').text('Sending Location...');
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // locationButton.removeAttr('disabled').text('Send Location');
+            var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
+
+            // if (that.props === nextProps)
+            initMap(userCoords, that.props.openSpots);
         });
     }
     formatAddress(location) {
@@ -63,8 +88,6 @@ class Map extends Component {
         // locationButton.attr('disabled', 'disabled').text('Sending Location...');
         navigator.geolocation.getCurrentPosition(function(position) {
             // locationButton.removeAttr('disabled').text('Send Location');
-            //     position.coords.latitude,
-            //     position.coords.longitude
             var obj = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
@@ -74,7 +97,7 @@ class Map extends Component {
                 markedClosedAt: undefined
             };
 
-            var obj2 = {lat: 41.003, lng: -72.48502};
+            var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, zipCode: '10461'};
             that.props.addLocation(obj2);
 
             that.formatAddress(obj);

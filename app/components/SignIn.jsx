@@ -15,13 +15,21 @@ class SignIn extends Component {
             redirect: false
         };
     }
+    componentWillMount() {
+        const script = document.createElement("script");
+
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s&callback=initMap";
+        script.async = true;
+        script.defer = true;
+
+        document.body.appendChild(script);
+    }
     componentDidMount() {
         socket.on('connect', function () {
             console.log('Connected to server');
         });
     }
     handleSubmit(e) {
-        // var params = deparam(window.location.search);
         e.preventDefault();
         var that = this;
 
