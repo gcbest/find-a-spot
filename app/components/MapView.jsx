@@ -13,13 +13,13 @@ class MapView extends Component {
     constructor () {
         super();
         this.state = {
-            locations: [{lat: 40.00, lng: -74.47,
-                         address:'',
+            locations: [{lat: 40.8512023, lng: -73.8639,
+                         address:'Dat Way, Trap, DuhNorf 80823',
                          zipCode: '',
+                         available: true,
                          id: uuid(),
                          markedOpenAt: moment().unix(),
-                         markedClosedAt: undefined}],
-            addresses: []
+                         markedClosedAt: undefined}]
         };
         this.addLocation = this.addLocation.bind(this);
         this.addAddress = this.addAddress.bind(this);

@@ -6,10 +6,22 @@ class OpenSpotsList extends Component {
         super(props)
     }
     render () {
+        var {addresses} = this.props;
+        var renderOpenSpots = () => {
+            if (addresses.length === 0) {
+                return <p>No Open Spots Available</p>
+            }
+
+            return addresses.map((spot) => {
+                return (
+                    <OpenSpot key={spot.lat} {...spot}/>
+                );
+            });
+        };
         return (
             <div id="spots-list">
                 <ul>
-                    {this.props.addresses.address}
+                    {renderOpenSpots()}
                 </ul>
             </div>
         );

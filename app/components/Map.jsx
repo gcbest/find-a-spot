@@ -69,6 +69,7 @@ class Map extends Component {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
                 id: uuid(),
+                available: true,
                 markedOpenAt: moment().unix(),
                 markedClosedAt: undefined
             };

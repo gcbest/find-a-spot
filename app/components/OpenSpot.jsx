@@ -1,18 +1,30 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 
 class OpenSpot extends Component {
     render () {
-
+        var {address, markedOpenAt, available, markedClosedAt} = this.props;
+        var renderSpot = () => {
+            if (available) {
+               return (
+                   <li>
+                       <p>{address}</p>
+                       <p>{moment.unix(markedOpenAt).format('MMM Do YYYY @ h:mm a')}</p>
+                       <button>I parked at this spot!</button>
+                   </li>
+               );
+            }
+        };
         return (
             <div id="open-spot">
-                <li>
-                    <p>Address</p>
-                    <p>Created At</p>
-                    <button>I parked at this spot!</button>
-                </li>
+                {renderSpot()}
             </div>
         );
     }
 }
 
 export default OpenSpot;
+
+// pass address info down to open spot
+// return an array of open spots components in list
+//
