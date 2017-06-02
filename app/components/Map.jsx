@@ -6,9 +6,6 @@ import axios from 'axios';
 var initMap = require('../api/googlemaps');
 
 class Map extends Component {
-    constructor (props) {
-        super(props);
-    }
     componentWillMount () {
         const scriptInit = document.createElement("script");
         scriptInit.text = initMap;
