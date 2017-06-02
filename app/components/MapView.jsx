@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import Nav from './Nav';
 import Map from './Map';
 import OpenSpotsList from './OpenSpotsList';
+var {socket} = require('./SignIn');
 
 var {formatAddress} = require('../api/formatAddress');
 
@@ -22,6 +23,8 @@ class MapView extends Component {
             //              markedClosedAt: undefined}]
             locations: [],
         };
+
+        socket.on('update locations', (spots) => this.updateLocationsArr(spots));
 
         var that = this;
 
@@ -49,12 +52,29 @@ class MapView extends Component {
         this.addLocation = this.addLocation.bind(this);
         this.updateAvailability = this.updateAvailability.bind(this);
     }
+    // componentDidMount() {
+    //     socket.emit('update locations array', this.state.locations, (err) => {
+    //         if (err) {
+    //             alert(err);
+    //         } else {
+    //             console.log('No error');
+    //         }
+    //     });
+    // }
     addLocation(objLocation) {
         var locationsArrCopy = this.state.locations;
         locationsArrCopy.push(objLocation);
 
         this.setState({
             locations: locationsArrCopy
+        });
+
+        socket.emit('update locations array', this.state.locations, (err) => {
+            if (err) {
+                alert(err);
+            } else {
+                console.log('No error');
+            }
         });
     }
     updateAvailability(id) {
@@ -76,6 +96,17 @@ class MapView extends Component {
         this.setState({
             locations: locationsArrCopy
         });
+
+        socket.emit('update locations array', this.state.locations, (err) => {
+            if (err) {
+                alert(err);
+            } else {
+                console.log('No error');
+            }
+        });
+    }
+    updateLocationsArr(locations) {
+        this.setState({locations});
     }
     /**** Returning an array of promises ****/
     // formatTheAddressArray(list) {

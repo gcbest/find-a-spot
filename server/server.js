@@ -32,6 +32,9 @@ io.on('connection', (socket) => {
         users.removeUser(socket.id);
         users.addUser(socket.id, params.name, params.room);
 
+        var user = users.getUser(socket.id);
+
+        console.log('user joined room', user);
         io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
@@ -40,6 +43,15 @@ io.on('connection', (socket) => {
 
         callback();
     });
+
+    socket.on('update locations array', (locations, callback) =>{
+        if(locations.length > 0) {
+            var user = users.getUser(socket.id);
+            io.to(user.room).emit('update locations', locations);
+        }
+        callback();
+    });
+
 
     socket.on('createMessage', (message, callback) => {
         var user = users.getUser(socket.id);

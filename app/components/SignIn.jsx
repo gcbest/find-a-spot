@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 const io = require('socket.io-client');
-const socket = io();
+export const socket = io();
 
 var initMap = require('../api/googlemaps');
 

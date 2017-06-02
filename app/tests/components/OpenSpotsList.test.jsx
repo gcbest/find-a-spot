@@ -40,4 +40,13 @@ describe('OpenSpotsList', () => {
         expect(openSpotComponents.length).toBe(openSpots.length);
     });
 
+    it('should render an empty message if there are no spots available', () => {
+        var openSpots = [];
+        var openSpotsList = TestUtils.renderIntoDocument(<OpenSpotsList addresses={openSpots}/>);
+
+        var $el = $(ReactDOM.findDOMNode(openSpotsList));
+
+        expect($el.find('#spots-list ul').length).toBe(0);
+    });
+
 });
