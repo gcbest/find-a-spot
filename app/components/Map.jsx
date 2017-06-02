@@ -16,7 +16,17 @@ class Map extends Component {
         document.body.appendChild(scriptInit);
     }
     componentDidMount() {
-        initMap(this.props.userCoords, this.props.openSpots);
+        var that = this;
+        if (!navigator.geolocation) {
+            return alert('Geolocation not supported by your browser!');
+        }
+        // locationButton.attr('disabled', 'disabled').text('Sending Location...');
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // locationButton.removeAttr('disabled').text('Send Location');
+            var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
+
+            initMap(userCoords, that.props.openSpots);
+        });
     }
     componentWillReceiveProps(nextProps) {
         initMap(nextProps.userCoords, nextProps.openSpots);
@@ -55,8 +65,11 @@ class Map extends Component {
                 markedClosedAt: undefined
             };
 
-            var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, zipCode: '10462'};
+            var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, id: "3", zipCode: '10462'};
             that.props.addLocation(obj2);
+
+            var obj3 = {lat: 43.303, lng: -72.48502, address: '99 Allen Ave, New Jack City', available: true, id: "4", zipCode: '10462'};
+            that.props.addLocation(obj3);
 
             that.formatAddress(obj);
         }, function() {

@@ -1,6 +1,7 @@
-
+import React from 'react';
 // making a request from the client to the server to open up a websocket and keep that connection open
 var socket = io();
+
 
 // function scrollToBottom() {
 //     // selectors
@@ -42,6 +43,8 @@ socket.on('updateUserList', function(usersArr) {
     // });
     //
     // jQuery('#users').html(ol);
+
+
 });
 
 // whenever the connection drops

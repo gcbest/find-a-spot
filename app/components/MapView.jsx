@@ -64,10 +64,14 @@ class MapView extends Component {
            if (spot.id === id && Math.floor(spot.lat * 100) === Math.floor(userCoords.lat * 100) && Math.floor(spot.lng * 100) === Math.floor(userCoords.lng * 100)) {
                var isAvailable = !spot.available;
                spot.available = isAvailable;
+               alert('Successfully claimed this spot');
                return false;
+           } else if (spot.id === id && (Math.floor(spot.lat * 100) !== Math.floor(userCoords.lat * 100) || Math.floor(spot.lng * 100) !== Math.floor(userCoords.lng * 100))) {
+               alert("You must be at the spot's location to claim it");
+               return true;
+           } else {
+               return true;
            }
-           return true;
-
         });
         this.setState({
             locations: locationsArrCopy
@@ -103,7 +107,6 @@ class MapView extends Component {
         });
         return (
             <div>
-                <Nav/>
                 <Map openSpots={locationsArrCopy} userCoords={this.state.userCoords} addLocation={this.addLocation}/>
                 <OpenSpotsList addresses={locationsArrCopy} updateAvailability={this.updateAvailability} userCoords={this.state.userCoords}/>
             </div>

@@ -4,11 +4,11 @@ import axios from 'axios';
 const io = require('socket.io-client');
 const socket = io();
 
-import Nav from './Nav';
+var initMap = require('../api/googlemaps');
 
 class SignIn extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: '',
             room: '',
@@ -40,8 +40,6 @@ class SignIn extends Component {
         // locationButton.attr('disabled', 'disabled').text('Sending Location...');
         navigator.geolocation.getCurrentPosition(function(position) {
             // locationButton.removeAttr('disabled').text('Send Location');
-            //     position.coords.latitude,
-            //     position.coords.longitude
             var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
 
             // Convert Lat & Lng into zip code
@@ -85,7 +83,6 @@ class SignIn extends Component {
         return (
             <div>
                 <div className="centered-form">
-                    <Nav/>
                     <h1>Find a spot near you!</h1>
                     <div className="centered-form__form">
                         <form id="signin-form">
