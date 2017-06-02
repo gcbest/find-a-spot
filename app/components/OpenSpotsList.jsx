@@ -14,7 +14,7 @@ class OpenSpotsList extends Component {
 
             return addresses.map((spot) => {
                 return (
-                    <OpenSpot key={spot.lat} {...spot} updateAvailability={this.props.updateAvailability}/>
+                    <OpenSpot key={spot.lat} {...spot} updateAvailability={this.props.updateAvailability} userCoords={this.props.userCoords}/>
                 );
             });
         };

@@ -58,8 +58,9 @@ class MapView extends Component {
         });
     }
     updateAvailability(id) {
+        var {userCoords} = this.state;
         var locationsArrCopy = this.state.locations.map((spot) => {
-           if (spot.id === id) {
+           if (spot.id === id && Math.floor(spot.lat * 100) === Math.floor(userCoords.lat * 100) && Math.floor(spot.lng * 100) === Math.floor(userCoords.lng * 100)) {
                var isAvailable = !spot.available;
                spot.available = isAvailable;
            }
@@ -99,8 +100,8 @@ class MapView extends Component {
         return (
             <div>
                 <Nav/>
-                <Map openSpots={locationsArrCopy} addLocation={this.addLocation}/>
-                <OpenSpotsList addresses={locationsArrCopy} updateAvailability={this.updateAvailability}/>
+                <Map openSpots={locationsArrCopy} userCoords={this.state.userCoords} addLocation={this.addLocation}/>
+                <OpenSpotsList addresses={locationsArrCopy} updateAvailability={this.updateAvailability} userCoords={this.state.userCoords}/>
             </div>
         );
     }

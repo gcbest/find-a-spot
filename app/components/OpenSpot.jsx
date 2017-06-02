@@ -2,13 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 
 class OpenSpot extends Component {
-    handleClick(id) {
-        // var updateAvailability = this.props.updateAvailability;
-        // updateAvailability(id);
-    }
     render() {
         var {address, markedOpenAt, available, id, markedClosedAt} = this.props;
-        this.handleClick = this.handleClick.bind(this);
         var renderSpot = () => {
             if (available) {
                return (

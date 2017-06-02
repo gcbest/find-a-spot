@@ -4,7 +4,6 @@ import moment from 'moment';
 import axios from 'axios';
 
 var initMap = require('../api/googlemaps');
-var {userCoords} = require('./SignIn');
 
 class Map extends Component {
     constructor (props) {
@@ -14,25 +13,17 @@ class Map extends Component {
         const scriptInit = document.createElement("script");
         scriptInit.text = initMap;
 
-        var that = this;
-
         document.body.appendChild(scriptInit);
-
-
-        // Grab user location
-        if (!navigator.geolocation) {
-            return alert('Geolocation not supported by your browser!');
-        }
-        // locationButton.attr('disabled', 'disabled').text('Sending Location...');
-        navigator.geolocation.getCurrentPosition(function(position) {
-            // locationButton.removeAttr('disabled').text('Send Location');
-            var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
-
-            initMap(userCoords, that.props.openSpots);
-
-        });
     }
-    // componentWillReceiveProps(nextProps) {
+    componentDidMount() {
+        initMap(this.props.userCoords, this.props.openSpots);
+    }
+    componentWillReceiveProps(nextProps) {
+        initMap(nextProps.userCoords, nextProps.openSpots);
+    }
+
+
+    // componentDidUpdate(prevProps, prevState) {
     //     var that = this;
     //     // Grab user location
     //     if (!navigator.geolocation) {
@@ -44,25 +35,9 @@ class Map extends Component {
     //         var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
     //
     //         // if (that.props === nextProps)
-    //         initMap(userCoords, nextProps.openSpots);
-    //
+    //         initMap(userCoords, that.props.openSpots);
     //     });
     // }
-    componentDidUpdate(prevProps, prevState) {
-        var that = this;
-        // Grab user location
-        if (!navigator.geolocation) {
-            return alert('Geolocation not supported by your browser!');
-        }
-        // locationButton.attr('disabled', 'disabled').text('Sending Location...');
-        navigator.geolocation.getCurrentPosition(function(position) {
-            // locationButton.removeAttr('disabled').text('Send Location');
-            var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
-
-            // if (that.props === nextProps)
-            initMap(userCoords, that.props.openSpots);
-        });
-    }
     formatAddress(location) {
         var that = this;
         var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;
@@ -97,7 +72,7 @@ class Map extends Component {
                 markedClosedAt: undefined
             };
 
-            var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, zipCode: '10461'};
+            var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, zipCode: '10462'};
             that.props.addLocation(obj2);
 
             that.formatAddress(obj);
