@@ -7,10 +7,10 @@ import MapView from './components/MapView'
 import ChatView from './components/ChatView';
 
 // Load foundation
-// require('style-loader!css-loader!foundation-sites/dist/foundation.min.css');
-// $(document).foundation();
+require('style-loader!css-loader!foundation-sites/dist/css/foundation.min.css');
+$(document).foundation();
 
-// require('style-loader!css-loader!applicatonStyles');
+require('style-loader!css-loader!./styles/app.css');
 
 ReactDOM.render(
     <Main>

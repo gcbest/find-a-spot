@@ -82,8 +82,10 @@ class SignIn extends Component {
         }
         return (
             <div>
+                <div id="header">
+                    <h1 className="page-title">Find a spot near you!</h1>
+                </div>
                 <div className="centered-form">
-                    <h1>Find a spot near you!</h1>
                     <div className="centered-form__form">
                         <form id="signin-form">
                             <div className="form-field">

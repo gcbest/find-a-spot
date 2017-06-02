@@ -5,7 +5,6 @@ const Main = (props) => {
         <div>
             <div className="row">
                 <div className="column medium-6 large-4 small-centered">
-                	Main Component
                     {props.children}
                 </div>
             </div>
