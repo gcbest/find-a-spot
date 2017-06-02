@@ -21,23 +21,6 @@ class Map extends Component {
     componentWillReceiveProps(nextProps) {
         initMap(nextProps.userCoords, nextProps.openSpots);
     }
-
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     var that = this;
-    //     // Grab user location
-    //     if (!navigator.geolocation) {
-    //         return alert('Geolocation not supported by your browser!');
-    //     }
-    //     // locationButton.attr('disabled', 'disabled').text('Sending Location...');
-    //     navigator.geolocation.getCurrentPosition(function(position) {
-    //         // locationButton.removeAttr('disabled').text('Send Location');
-    //         var userCoords = {lat: position.coords.latitude, lng: position.coords.longitude};
-    //
-    //         // if (that.props === nextProps)
-    //         initMap(userCoords, that.props.openSpots);
-    //     });
-    // }
     formatAddress(location) {
         var that = this;
         var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s`;

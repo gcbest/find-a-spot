@@ -59,12 +59,15 @@ class MapView extends Component {
     }
     updateAvailability(id) {
         var {userCoords} = this.state;
-        var locationsArrCopy = this.state.locations.map((spot) => {
+        // only keep the available locations in this array
+        var locationsArrCopy = this.state.locations.filter((spot) => {
            if (spot.id === id && Math.floor(spot.lat * 100) === Math.floor(userCoords.lat * 100) && Math.floor(spot.lng * 100) === Math.floor(userCoords.lng * 100)) {
                var isAvailable = !spot.available;
                spot.available = isAvailable;
+               return false;
            }
-           return spot;
+           return true;
+
         });
         this.setState({
             locations: locationsArrCopy
@@ -93,6 +96,7 @@ class MapView extends Component {
     // }
 
     render () {
+        // Filtering to only show locations in user's zip code
         var locationsArrCopy = this.state.locations;
         locationsArrCopy = locationsArrCopy.filter((spot) => {
             return spot.available && spot.zipCode === this.state.zipCode;
