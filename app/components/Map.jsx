@@ -65,7 +65,7 @@ class Map extends Component {
             var obj2 = {lat: 41.003, lng: -72.48502, address: '74 Peabody Pl, Brick City', available: true, id: "3", zipCode: '10462'};
             that.props.addLocation(obj2);
 
-            var obj3 = {lat: 43.303, lng: -72.48502, address: '99 Allen Ave, New Jack City', available: true, id: "4", zipCode: '10462'};
+            var obj3 = {lat: 43.303, lng: -72.48502, address: '99 Allen Ave, New Jack City', available: true, id: "4", zipCode: '13362'};
             that.props.addLocation(obj3);
 
             that.formatAddress(obj);

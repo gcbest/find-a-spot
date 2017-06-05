@@ -62,7 +62,6 @@ function initMap(centerLocation = {lat: -25.363, lng: 131.044}, markerLocationAr
     //
     // toggleMarkers();
 
-
 }
 
 module.exports = initMap;

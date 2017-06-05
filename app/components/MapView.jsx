@@ -52,9 +52,6 @@ class MapView extends Component {
         this.addLocation = this.addLocation.bind(this);
         this.updateAvailability = this.updateAvailability.bind(this);
     }
-    componentDidUpdate(nextProps, nextState) {
-
-    }
     addLocation(objLocation) {
         var locationsArrCopy = this.state.locations;
         locationsArrCopy.push(objLocation);

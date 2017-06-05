@@ -16,13 +16,17 @@ class SignIn extends Component {
         };
     }
     componentWillMount() {
-        const script = document.createElement("script");
+        if (!document.getElementById('googleMapsAPI')) {
+            const script = document.createElement("script");
 
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s&callback=initMap";
-        script.async = true;
-        script.defer = true;
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBBdT0ajba4ZVpgaZeUupDTPE2x7ecAt4s&callback=initMap";
+            script.async = true;
+            script.defer = true;
+            script.setAttribute('id', 'googleMapsAPI');
 
-        document.body.appendChild(script);
+            document.body.appendChild(script);
+        }
+
     }
     componentDidMount() {
         socket.on('connect', function () {
@@ -33,6 +37,7 @@ class SignIn extends Component {
         e.preventDefault();
         var that = this;
 
+        this.props.history.push('/');
         // Grab user location
         if (!navigator.geolocation) {
             return alert('Geolocation not supported by your browser!');
@@ -71,6 +76,7 @@ class SignIn extends Component {
                     throw error;
                 });
         });
+
 
 
     }
