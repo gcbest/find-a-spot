@@ -21,7 +21,7 @@ class MapView extends Component {
             //              id: uuid(),
             //              markedOpenAt: moment().unix(),
             //              markedClosedAt: undefined}]
-            locations: [],
+            locations: []
         };
 
         socket.on('update locations', (spots) => this.updateLocationsArr(spots));
@@ -52,23 +52,17 @@ class MapView extends Component {
         this.addLocation = this.addLocation.bind(this);
         this.updateAvailability = this.updateAvailability.bind(this);
     }
-    // componentDidMount() {
-    //     socket.emit('update locations array', this.state.locations, (err) => {
-    //         if (err) {
-    //             alert(err);
-    //         } else {
-    //             console.log('No error');
-    //         }
-    //     });
-    // }
+    componentDidUpdate(nextProps, nextState) {
+
+    }
     addLocation(objLocation) {
         var locationsArrCopy = this.state.locations;
         locationsArrCopy.push(objLocation);
 
-        this.setState({
-            locations: locationsArrCopy
-        });
-
+        // this.setState({
+        //     locations: locationsArrCopy
+        // });
+        this.filterLocations(locationsArrCopy);
         socket.emit('update locations array', this.state.locations, (err) => {
             if (err) {
                 alert(err);
@@ -93,10 +87,10 @@ class MapView extends Component {
                return true;
            }
         });
-        this.setState({
-            locations: locationsArrCopy
-        });
-
+        // this.setState({
+        //     locations: locationsArrCopy
+        // });
+        this.filterLocations(locationsArrCopy);
         socket.emit('update locations array', this.state.locations, (err) => {
             if (err) {
                 alert(err);
@@ -107,6 +101,16 @@ class MapView extends Component {
     }
     updateLocationsArr(locations) {
         this.setState({locations});
+    }
+
+    filterLocations(locationArray) {
+        // Filtering to only show locations in user's zip code
+        var locationsFiltered = locationArray;
+        locationsFiltered = locationsFiltered.filter((spot) => {
+            return spot.available && spot.zipCode === this.state.zipCode;
+        });
+
+        this.setState({locations: locationsFiltered});
     }
     /**** Returning an array of promises ****/
     // formatTheAddressArray(list) {
@@ -131,15 +135,10 @@ class MapView extends Component {
     // }
 
     render () {
-        // Filtering to only show locations in user's zip code
-        var locationsArrCopy = this.state.locations;
-        locationsArrCopy = locationsArrCopy.filter((spot) => {
-            return spot.available && spot.zipCode === this.state.zipCode;
-        });
         return (
             <div>
-                <Map openSpots={locationsArrCopy} userCoords={this.state.userCoords} addLocation={this.addLocation}/>
-                <OpenSpotsList addresses={locationsArrCopy} updateAvailability={this.updateAvailability} userCoords={this.state.userCoords}/>
+                <Map openSpots={this.state.locations} userCoords={this.state.userCoords} addLocation={this.addLocation}/>
+                <OpenSpotsList addresses={this.state.locations} updateAvailability={this.updateAvailability} userCoords={this.state.userCoords}/>
             </div>
         );
     }
